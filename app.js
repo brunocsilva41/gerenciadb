@@ -4,10 +4,9 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 require('dotenv').config();
-const path = require('path');
 const cors = require('cors'); // Importar o pacote cors
 const app = express();
-const router = require('./router.js');
+
 
 
 app.use(cors({
@@ -18,8 +17,6 @@ const port = process.env.DB_PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // Adicione esta linha para analisar JSON
 
-app.use(express.static(path.join(__dirname, '..', 'pages')));
-app.use('/', router);
 
 // Configuração da conexão com o banco de dados
 const db = mysql.createConnection({
@@ -50,6 +47,7 @@ app.post('/criar-conta', [
     db.query(sql, [name, email, hashedPassword], (err, result) => {
         if (err) throw err;
         res.status(201).json({ message: 'Conta criada com sucesso!' });
+        array = [];
     });}
 );
 
