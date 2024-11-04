@@ -81,5 +81,5 @@ app.post('/login-conta', [
 // Iniciar o servidor HTTP
 app.listen(port, (err) => {
     if (err) console.error(err);
-    console.log(`Servidor rodando em http://localhost:${port}`);
+    console.log(`Servidor rodando em ${baseURL}:${port}`);
 });
