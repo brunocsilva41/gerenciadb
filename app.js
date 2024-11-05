@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-    'https://whimsical-kataifi-e8b8fd.netlify.app'
+    'https://brunosilva-projetointegradorpt2.netlify.app/'
 ];
 
 app.use(cors({
@@ -41,11 +41,12 @@ db.connect(err => {
     }
 });
 
-
-
-// Importa o router de usuários
 import userRoutes from './routes/users.js';
-app.use('/api/users', userRoutes(db));
+app.use('/api', userRoutes(db)); 
 
-// Exporta o app para o Vercel
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});
+
 export default app;
