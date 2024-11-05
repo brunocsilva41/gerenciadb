@@ -66,6 +66,7 @@ const userRoutes = (db) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
+        [array] = results;
         res.status(200).json(results);
     });
 });
