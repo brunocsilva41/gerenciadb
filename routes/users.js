@@ -1,9 +1,8 @@
-// users.js
-const express = require('express');
-const bcrypt = require('bcrypt');
-const { body, validationResult } = require('express-validator');
+import bcrypt from 'bcrypt';
+import express from 'express';
+import { body, validationResult } from 'express-validator';
 
-module.exports = (db) => {
+const userRoutes = (db) => {
     const router = express.Router();
 
     // Rota para criar conta
@@ -62,3 +61,5 @@ module.exports = (db) => {
 
     return router;
 };
+
+export default userRoutes;

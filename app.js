@@ -1,11 +1,10 @@
-// app.js
-const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const bcrypt = require('bcrypt');
-const { body, validationResult } = require('express-validator');
-require('dotenv').config();
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import sqlite3 from 'sqlite3';
+
+dotenv.config();
 
 const app = express();
 
@@ -26,8 +25,8 @@ const db = new sqlite3.Database('./db/usuarios_banco.db', (err) => {
 });
 
 // Importa o router de usuários
-const userRoutes = require('./routes/users')(db);
-app.use('/api/users', userRoutes);
+import userRoutes from './routes/users.js';
+app.use('/api/users', userRoutes(db));
 
 // Exporta o app para o Vercel
-module.exports = app;
+export default app;
