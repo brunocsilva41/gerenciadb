@@ -7,8 +7,18 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+    'https://whimsical-kataifi-e8b8fd.netlify.app'
+];
+
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
