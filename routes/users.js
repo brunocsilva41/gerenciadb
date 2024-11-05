@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 
+
 const userRoutes = (db) => {
     const router = express.Router();
 
@@ -45,7 +46,6 @@ const userRoutes = (db) => {
             if (user) {
                 const match = await bcrypt.compare(password, user.senha);
                 if (match) {
-                    [array] = results;
                     res.status(200).json({
                         message: 'Login bem-sucedido',
                         userId: user.id,
@@ -66,7 +66,10 @@ const userRoutes = (db) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
-        [array] = results;
+        const array = results;
+        array.forEach(element => {
+            console.log(element);
+        });
         res.status(200).json(results);
     });
 });
