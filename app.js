@@ -26,6 +26,16 @@ db.connect(err => {
     if (err) throw err;
     console.log('Conectado ao banco de dados MySQL!');
 });
+app.post('/api/usuarios', (req, res) => {
+    const sql = 'SELECT * FROM usuarios';
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(200).json(results);
+    });
+});
+
 
 // Importa o router de usuários
 import userRoutes from './routes/users.js';
