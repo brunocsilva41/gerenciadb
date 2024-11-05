@@ -60,7 +60,7 @@ const userRoutes = (db) => {
         });
     });
     router.post('/api/usuarios', (req, res) => {
-    const sql = 'SELECT * FROM usuarios';
+    const sql = 'SELECT Id, nome, email, role FROM usuarios';
     db.query(sql, (err, results) => {
         if (err) {
             return res.status(500).json({ error: err.message });
