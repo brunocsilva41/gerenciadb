@@ -18,7 +18,7 @@ const userRoutes = (db) => {
         const { name, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const sql = `INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)`;
-        db.run(sql, [name, email, hashedPassword], function (err) {
+        db.query(sql, [name, email, hashedPassword], function (err, results) {
             if (err) {
                 return res.status(500).json({ error: err.message });
             }
@@ -37,10 +37,11 @@ const userRoutes = (db) => {
         }
         const { email, password } = req.body;
         const sql = `SELECT * FROM usuarios WHERE email = ?`;
-        db.get(sql, [email], async (err, user) => {
+        db.query(sql, [email], async (err, results) => {
             if (err) {
                 return res.status(500).json({ error: err.message });
             }
+            const user = results[0];
             if (user) {
                 const match = await bcrypt.compare(password, user.senha);
                 if (match) {
