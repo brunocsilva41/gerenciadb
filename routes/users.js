@@ -18,7 +18,7 @@ const userRoutes = (db) => {
         }
         const { name, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const sql = `INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)`;
+        const sql = `INSERT INTO usuarios (nome, email, senha , role) VALUES (?, ?, ? , 'user')`;
         db.query(sql, [name, email, hashedPassword], function (err, results) {
             if (err) {
                 return res.status(500).json({ error: err.message });
@@ -60,19 +60,21 @@ const userRoutes = (db) => {
             }
         });
     });
-    router.post('/api/usuarios', (req, res) => {
-    const sql = 'SELECT Id, nome, email, role FROM usuarios';
-    db.query(sql, (err, results) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        const array = results;
-        array.forEach(element => {
-            console.log(element);
+
+    // Rota para obter informações dos usuários
+    router.get('/usuarios', (req, res) => {
+        const sql = 'SELECT Id, nome, email, role FROM usuarios';
+        db.query(sql, (err, results) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            const array = results;
+            array.forEach(element => {
+                console.log(element);
+            });
+            res.status(200).json(results);
         });
-        res.status(200).json(results);
     });
-});
 
     return router;
 };
