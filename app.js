@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-    'https://brunosilva-projetointegradorpt2.netlify.app'
+    'https://brunosilva-testeapi.netlify.app'
 ];
 
 app.use(cors({
