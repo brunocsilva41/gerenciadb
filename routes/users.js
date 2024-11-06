@@ -82,7 +82,7 @@ const userRoutes = (db) => {
         const route = `${projectId}/pause`;
 
         try {
-            const response = await fetch(`https://api.vercel.com/v1/projects/${route}`, {
+            const response = await fetch(`https://api.vercel.com/v1/projects/prj_pT33YVEt55Xxb4zTdQXgE8vxIabh/pause`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
