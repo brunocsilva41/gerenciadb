@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
-
+import fetch from 'node-fetch'; // Adicione esta linha para importar o fetch
 
 const userRoutes = (db) => {
     const router = express.Router();
@@ -74,6 +74,30 @@ const userRoutes = (db) => {
             });
             res.status(200).json(results);
         });
+    });
+
+    // Rota para pausar o projeto na Vercel
+    router.post('/pausa-projeto', async (req, res) => {
+        const projectId = 'prj_pT33YVEt55Xxb4zTdQXgE8vxIabh';
+        const route = `${projectId}/pause`;
+
+        try {
+            const response = await fetch(`https://api.vercel.com/v1/projects/${route}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
+                },
+            });
+
+            if (response.ok) {
+                res.status(200).json({ message: 'Project paused' });
+            } else {
+                res.status(response.status).json({ error: 'Failed to pause project' });
+            }
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
     });
 
     return router;
