@@ -90,12 +90,16 @@ const userRoutes = (db) => {
                 },
             });
 
+            const responseBody = await response.json();
+
             if (response.ok) {
                 res.status(200).json({ message: 'Project paused' });
             } else {
-                res.status(response.status).json({ error: 'Failed to pause project' });
+                console.error('Failed to pause project:', responseBody);
+                res.status(response.status).json({ error: 'Failed to pause project', details: responseBody });
             }
         } catch (error) {
+            console.error('Error pausing project:', error);
             res.status(500).json({ error: error.message });
         }
     });
